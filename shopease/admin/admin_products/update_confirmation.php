@@ -14,7 +14,7 @@ session_start();
         <p>
           Thank you  information has been updated.
         </p>
-        <p><a href="index.php">Back to Home</a></p>
+        <p><a href="home.php">Back to Home</a></p>
        </main>
        <?php include("footer.php"); ?>
    </body>

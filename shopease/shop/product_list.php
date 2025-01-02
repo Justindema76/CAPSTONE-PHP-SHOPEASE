@@ -1,5 +1,4 @@
-<?php include '../view/header.php'; ?>
-<?php include '../view/sidebar.php'; ?>
+
 <section>
     <h1><?php echo $current_category->getName(); ?></h1>
     <?php if (count($products) == 0) : ?>
@@ -17,4 +16,3 @@
         </ul>
     <?php endif; ?>
 </section>
-<?php include '../view/footer.php'; ?>

@@ -32,7 +32,7 @@ if (empty($productID)) {
         $statement->closeCursor();
         
          // Redirect to the Product List page, passing the categoryID to retain the filter
-         header("Location: ../admin_products/index.php?categoryID=" . $categoryID);
+         header("Location: ../admin_products/home.php?categoryID=" . $categoryID);
          exit();
      } catch (PDOException $e) {
          // Handle potential database errors

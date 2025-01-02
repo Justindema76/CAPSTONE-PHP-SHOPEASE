@@ -19,13 +19,16 @@ $statementCategories->closeCursor();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Categories</title>
-    <link rel="stylesheet" href="../../css/categories.css">
+    <title>Edit Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/.css">
 </head>
 <body>
-<?php include("../../view/admin_sidebar.php"); ?>
+    <?php include("../../view/admin_sidebar.php"); ?>
+    <main class="container my-2">
+
 <main>
-    <h1>ShopEase - Manage Categories</h1>
+    <h2>Manage Categories</h2>
 
     <!-- Error message (if any) -->
     <?php if (!empty($error)): ?>
@@ -42,32 +45,33 @@ $statementCategories->closeCursor();
         <input id="form_button" type="submit" value="Add" />
     </form>
 
-    <!-- Category List -->
-    <h1>Category List</h1>
-    <table>
-        <tr>
-            
-            <th>Department</th>
-            <th>Category Name</th>
-            <th></th>
-        </tr>
-        
-        <!-- Display categories in the table -->
-        <?php foreach ($categories as $category) : ?>
-        <tr>
-      
-            <td><?php echo $category['categoryName']; ?></td>
-
-            <td>
-                <!-- Form for deleting a category -->
-                <form action="../categories/delete_category.php" method="post" style="display:inline;">
-                    <input type="hidden" name="categoryID" value="<?php echo $category['categoryID']; ?>">
-                    <input type="submit" class="delete-button" value="Delete">
-                </form>
-            </td>
-        </tr>
-        <?php endforeach; ?>    
+    <h1 class="my-4">Category List</h1>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Category Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Display categories in the table -->
+            <?php foreach ($categories as $category) : ?>
+            <tr>
+                <td><?php echo htmlspecialchars($category['categoryName']); ?></td>
+                <td>
+                    <!-- Form for deleting a category -->
+                    <form action="../categories/delete_category.php" method="post" style="display:inline;">
+                        <input type="hidden" name="categoryID" value="<?php echo htmlspecialchars($category['categoryID']); ?>">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>    
+        </tbody>
     </table>
+</div>
+
 </main>
 </body>
 </html>

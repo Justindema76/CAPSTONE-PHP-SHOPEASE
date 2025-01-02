@@ -33,22 +33,16 @@ error_reporting(E_ALL);
       <p><strong>Discount Percent:</strong> <?php echo htmlspecialchars($product['discountPercent']); ?>%</p>
 
    <!-- Add to Cart Form -->
-  <form action="cart.php" method="post" class="mt-3">
+  <form action="cart.php" method="post" id="add_to_cart_form" class="mt-3">
     <input type="hidden" name="action" value="add">
-    <input type="hidden" name="productID" value="<?php echo $product['productID']; ?>"> 
-    <input type="hidden" name="imageName" value="<?php echo $product['imageName']; ?>"> 
-    <input type="hidden" name="productName" value="<?php echo $product['productName']; ?>"> 
-    <input type="hidden" name="listPrice" value="<?php echo $product['listPrice']; ?>"> 
+    <input type="hidden" name="productID" value="<?php echo $product['productID']; ?>">  <!-- Product ID -->
     
     <label for="quantity"><strong>Quantity:</strong></label>
     <div class="d-flex align-items-center">
-        
-    <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control w-50" required>
-        
-    <button type="submit" class="ms-3" name="add_to_cart">Add to Cart</button>
+        <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control w-50" required>
+        <button type="submit" class="ms-3">Add to Cart</button>
     </div>
 </form>
-
 
 
 

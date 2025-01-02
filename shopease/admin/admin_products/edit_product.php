@@ -4,12 +4,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  echo '<pre>';
-  print_r($_POST);  // Check the POST data
-  echo '</pre>';
-}
-
 // Check if the form was submitted using POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize the input data
@@ -21,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $listPrice = filter_input(INPUT_POST, 'listPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $discountPercent = filter_input(INPUT_POST, 'discountPercent', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $stock = filter_input(INPUT_POST, 'stock', FILTER_SANITIZE_NUMBER_INT);
-    
+
+    // Handle image name as a string input
+    $imageName = filter_input(INPUT_POST, 'imageName', FILTER_SANITIZE_STRING);
 
     // Validate required fields
     $errors = [];
@@ -33,7 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($listPrice === false) $errors[] = 'List price is required and must be a valid number.';
     if ($discountPercent === false) $errors[] = 'Discount percent is required and must be a valid number.';
     if (!$stock) $errors[] = 'Stock is required.';
-
+    if (!$imageName) $errors[] = 'Image Name is required.'; // image name validation
+    
     if (empty($errors)) {
         // Database connection
         require("../../database.php");
@@ -41,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Prepare SQL UPDATE statement
         $query = 'UPDATE products
                   SET categoryID = :categoryID, productCode = :productCode, productName = :productName, 
-                      description = :description, listPrice = :listPrice, discountPercent = :discountPercent, stock = :stock
+                      description = :description, listPrice = :listPrice, discountPercent = :discountPercent, stock = :stock, imageName = :imageName
                   WHERE productID = :productID';
 
         $statement = $db->prepare($query);
@@ -55,12 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $statement->bindValue(':listPrice', $listPrice, PDO::PARAM_STR);
         $statement->bindValue(':discountPercent', $discountPercent, PDO::PARAM_STR);
         $statement->bindValue(':stock', $stock, PDO::PARAM_INT);
+        $statement->bindValue(':imageName', $imageName, PDO::PARAM_STR); // Bind the imageName string
 
         // Execute the statement with error handling
         try {
             if ($statement->execute()) {
-                // After successful update, redirect to the product listing page
-                header('Location: product_view.php');
+               
+                header('Location: index.php');
                 exit();
             } else {
                 echo 'Error updating product.';

@@ -1,0 +1,581 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+
+body{
+  font-family: 'Poppins', sans-serif;
+}
+
+h1{
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+h2{
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+h3{
+  font-size: 1.5rem;
+  font-weight: 200;
+}
+
+h4{
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+h5{
+  font-size: 1.2rem;
+  font-weight: 200;
+}
+
+h6{
+  color: #d8d8d8;
+}
+p{
+  font-weight: 200;
+}
+button{
+  font-size: 1.3rem;
+  font-weight: 300;
+  outline: none;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.5s ease;
+  background-color: #d00;
+  
+}
+button:hover{
+  background-color:#000;
+  
+}
+
+
+
+@media (max-width: 768px) {
+  #brand .img-fluid {
+    width: 100%;
+  }
+}
+
+
+#home {
+  position: relative;
+  background: url(../assets/images/back1.png) no-repeat;
+  width: 100%;
+  height: 75vh;
+  background-position-y: 50px; /* Move the image further down */
+  background-size: contain;
+  background-position-x: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: #d00;
+  background-attachment: fixed;
+}
+
+/* For small screens (e.g., mobile devices), move the image down */
+@media (max-width: 568px) {
+  #home {
+    margin-top: 40px; /* Adjust this value based on your navbar height */
+    background-attachment: scroll; /* Fallback for mobile */
+    background-size: cover;
+    background-position: center; /* Center the image horizontally */
+    background-attachment: fixed;
+  }
+}
+
+
+
+
+#home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Dark overlay with 50% opacity */
+  z-index: 1; /* Make sure the overlay sits above the background image */
+}
+
+#home > * {
+  position: relative;
+  z-index: 2; /* Ensure the content inside #home is above the overlay */
+}
+
+#home span{
+  color: rgb(255, 255, 255);
+  font-size: 2.5rem;
+}
+
+#brand .row {
+  display: flex;
+  justify-content: center; /* Centers the images horizontally */
+  flex-wrap: wrap; /* Prevents images from wrapping to a new row */
+ 
+}
+
+#brand .row .img-fluid {
+  display: block;
+  width: 180px; /* Smaller width for the images */
+  height: 90px; /* Smaller height for the images */
+  object-fit: contain; /* Ensures the entire image is shown without cropping */
+  margin: 0 50px;
+}
+
+#brand .row .img-fluid img {
+  width: 100%; /* Make the image take full width of the container */
+  height: 100%; /* Make the image take full height of the container */
+}
+/* Reset body margin and padding */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+/* #new{
+  background-color: #d8d8d8;
+  
+} */
+/* New section */
+#new .one {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+ margin: 20px 0;
+}
+
+/* Styling each column inside the row */
+
+ #new .details h2 {
+  font-weight: 300;
+  font-size: 1.3rem;
+}
+/* Image styling */
+#new .img-fluid {
+  object-fit: contain;
+  width: 80%; 
+  height: 80%; 
+  background-color: white;
+  cursor: pointer;
+  transition: .3s all;;
+}
+#new .tv .img-fluid {
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+#new .img-fluid:hover{
+  transform: scale(1.1); /* Scales the image to 110% of its size */
+  transition: transform 0.3s ease-in-out; /* Smooth animation */
+}
+/* Details section under images */
+#new .details {
+  padding: 10px;
+}
+
+/* Styling for buttons */
+button {
+  margin-top: 10px;
+}
+.star{
+  padding: 10px 0;
+}
+.star i{
+  color: gold;
+}
+/* Products */
+
+.product{
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.product img{
+  transition: .3s all;
+  
+}
+
+.product:hover img {
+  transform: scale(1.1); /* Scales the image to 110% of its size */
+  transition: transform 0.3s ease-in-out; /* Smooth animation */
+}
+
+/* Container for product view */
+.product_view {
+  display: flex;
+  justify-content: space-between; /* Align image and product info side by side */
+  align-items: flex-start; /* Align items to the top */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Image container on the left */
+.product_view .product-image {
+  flex: 1; /* Allow the image container to take up available space */
+  display: flex; /* Use flexbox for centering the image */
+  justify-content: center; /* Center the image horizontally */
+}
+
+/* Image styles */
+.product_view .product-image img {
+  width: 60%; /* Adjust the size of the image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border style */
+}
+
+
+/* Product details on the right */
+.product_view .product-details {
+  width: 40%; /* Product details take 55% of the width */
+  padding-left: 20px;
+}
+
+.product_view h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.product_view p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+
+
+#banner{
+  position: relative;
+  background: url(../assets/images/tv-bg-img.webp) no-repeat center center;
+  width: 100%;
+  height: 78vh;
+  background-size: cover;
+  background-position-x:center ;
+  background-position-y: px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: #d00;
+  background-attachment: fixed;
+}
+#banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); /* Dark overlay with 50% opacity */
+  z-index: 1; /* Make sure the overlay sits above the background image */
+}
+#banner h1{
+ font-size: 3.0rem;
+ font-weight: 300;
+}
+
+#banner h2{
+color: #ffffff;
+}
+#banner .container{
+  z-index: 2; 
+}
+
+
+
+/* Container for product view */
+.product_view {
+  display: flex;
+  justify-content: space-between; /* Align image and product info side by side */
+  align-items: flex-start; /* Align items to the top */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Image container on the left */
+.product_view .product-image {
+  flex: 1; /* Allow the image container to take up available space */
+  display: flex; /* Use flexbox for centering the image */
+  justify-content: center; /* Center the image horizontally */
+}
+
+/* Image styles */
+.product_view .product-image img {
+  width: 60%; /* Adjust the size of the image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border style */
+}
+
+
+/* Product details on the right */
+.product_view .product-details {
+  width: 40%; /* Product details take 55% of the width */
+  padding-left: 20px;
+}
+
+.product_view h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.product_view p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+.cart-empty-message {
+  margin-top: 100px; /* Adjust as needed to clear the navbar */
+  text-align: center; /* Optional: Center the text */
+  font-size: 1.2rem; /* Optional: Make the text more visible */
+}
+
+/* login */
+#login-form{
+  width: 50%;
+  margin: 5px auto;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #d00;
+}
+
+#login-form input{
+  width: 50%;
+  margin: 5px auto;
+}
+
+#login-form #login-btn{
+  background-color: #d00;
+  color: white;
+
+}
+
+#login-form #register-url{
+  color: #000;
+}
+
+/* cart */
+
+.cart table{
+  width: 100%;
+  border-collapse: collapse;
+
+}
+
+.cart .product-info{
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.cart th{
+  text-align: left;
+  padding: 5px 10px;
+  color: white;
+  background-color: #d00;
+}
+
+.cart td{
+  padding: 10px 20px;
+}
+
+.cart td img{
+  width: 80px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.cart td input{
+  width: 50px;
+  height: 30px;
+  padding: 5px;
+}
+
+.cart td a{
+  color: #d00;
+}
+
+.cart .remove-btn{
+  color: #d00;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.cart .edit-btn{
+  color: #d00;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.cart .product-info p{
+  margin: 3px;
+}
+
+.cart-total{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-total table{
+  width: 100%;
+  max-width: 500px;
+  border-top: 2px solid #d00;
+}
+
+td:last-child{
+  text-align: right;
+}
+
+th:last-child{
+  text-align: right;
+}
+
+.checkout-container{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.checkout-btn{
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+/* register */
+#register-form{
+  width: 100%;
+  margin: 5px auto;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #d00;
+}
+
+#register-form input{
+  width: 100%;
+  margin: 5px auto;
+}
+
+#register-form select{
+  width: 100%;
+  margin: 5px auto;
+}
+
+#register-form #register-btn{
+  background-color: #d00;
+  color: white;
+
+}
+
+#register-form #register-url{
+  color: #000;
+}
+
+/* account */
+
+#account-form{
+  width: 50%;
+  margin: 35px auto;
+  text-align: center;
+  padding: 20px;
+}
+
+#account-form input{
+  margin: 5px auto;
+}
+
+#account-form #change-pass-btn{
+  color: white;
+  background-color: #d00;
+}
+
+.account-info #orders-btn, #logout-btn{
+  color: #d00;
+  text-decoration: none;
+}
+
+/* orders */
+
+.orders table{
+  width: 100%;
+  border-collapse: collapse;
+}
+.orders .product-info{
+  display: flex;
+  flex-wrap: wrap;
+}
+.orders th{
+ 
+  padding: 5px 10px;
+  color: white;
+  background-color: #d00;
+  text-align: left;
+}
+.orders th:nth-child(2){
+  text-align: right;
+}
+
+.orders td{
+  padding: 10px 20px;
+}
+
+.orders td img{
+  width: 80px;
+  height: auto;
+  margin-right: 10px;
+}
+
+/* checkout */
+.cart-table {
+  width: 100%; /* Adjusts the table width to fill the container */
+  table-layout: fixed; /* Ensures equal width distribution for table cells */
+}
+
+/* Ensures that all td elements are inline */
+.cart-table td {
+  vertical-align: middle; /* Centers content vertically within the cell */
+  padding: 10px; /* Adds padding to each cell */
+  text-align: left; /* Aligns text to the left (can be changed to center or right if needed) */
+}
+
+/* Styling for the product-info div to keep things inline */
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-info img {
+  width: 80px; /* Set image width */
+  height: auto;
+  margin-right: 10px; /* Adds space between the image and text */
+}
+
+.product-info p {
+  margin: 0; /* Removes the margin for the paragraph, making the layout tighter */
+}
