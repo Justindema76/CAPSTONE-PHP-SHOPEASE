@@ -32,8 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['emailAddress'] = $user['emailAddress'];
             $_SESSION['firstName'] = $user['firstName'];
 
-            // Redirect to a logged-in page
-            header("Location: home.php");
+            // Check if there's a redirect URL stored in the session
+            if (isset($_SESSION['redirect_after_login'])) {
+                $redirectUrl = $_SESSION['redirect_after_login'];
+                unset($_SESSION['redirect_after_login']); // Clear the session variable after redirect
+                header("Location: $redirectUrl");
+            } else {
+                // Redirect to the default page (e.g., home)
+                header("Location: home.php");
+            }
             exit();
         } else {
             $error_message = "Invalid email or password.";

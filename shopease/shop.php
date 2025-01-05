@@ -113,8 +113,8 @@ $statement->closeCursor();
             <!-- Display the product image -->
             <?php if (!empty($product['imageName'])): ?>
                 <div id="new">
-                <img src="<?php echo htmlspecialchars('images/' . $product['imageName']); ?>" alt="<?php echo htmlspecialchars($product['productName']); ?>" class="one img-fluid" >
-            </div>
+                <img src="<?php echo htmlspecialchars('images/' . $product['imageName']); ?>" alt="<?php echo htmlspecialchars($product['productName']); ?>" class="one img-fluid"  >
+    </div>
             <?php else: ?>
                 <p>No image available</p>
             <?php endif; ?>

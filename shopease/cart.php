@@ -1,3 +1,4 @@
+<!-- cart.php -->
 <?php
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
@@ -17,9 +18,6 @@ require_once('database.php');
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
-
-
-
 
 // Fetch the product details from the database
 function get_product($productID) {
@@ -52,12 +50,17 @@ function add_item($productID, $quantity) {
                 'total' => $total,
                 'image' => $imageName, // Add this line
             ];
-
-            // Add to DB
-            add_item_to_db($productID, $quantity);
+        }
+    
+        // Add the product and quantity to the database
+        add_item_to_db($productID, $quantity);
+    
+        // Redirect to shop.php
+        header("Location: shop.php");
+        exit(); // Ensure no further code is executed after the redirect
         }
     }
-}
+
 
 
 // Update item quantity in cart
@@ -276,11 +279,10 @@ function add_item_to_db($productID, $quantity) {
             </div>
 
             <div class="d-flex justify-content-center gap-3 py-2">
-                <!-- CONTINUE SHOPPING -->
-                <button onclick="window.location.href='shop.php'">Continue Shopping</button>
-                
-                <!-- CHECKOUT -->
-                <button>Proceed to Checkout</button>
+                 <!-- CONTINUE SHOPPING -->
+            <button onclick="window.location.href='shop.php'">Continue Shopping</button>
+            <!-- CHECKOUT -->
+            <button onclick="window.location.href='checkout.php'">Proceed to Checkout</button>
             </div>
 
         <?php else: ?>

@@ -12,7 +12,7 @@ error_reporting(E_ALL);
 
 // Check if customer is logged in
 if (!isset($_SESSION['customerID'])) {
-    echo 'Customer is not logged in.';
+    header('Location: login.php');
     exit();
 }
 
@@ -64,6 +64,7 @@ try {
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
