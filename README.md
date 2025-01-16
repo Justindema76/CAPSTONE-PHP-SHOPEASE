@@ -7,7 +7,6 @@ ShopEase is an innovative e-commerce platform that aims to provide users with a 
 General Functionality
 *	User Authentication: Users can register, log in, and manage their profiles, including their order history.
 *	Product Listings: Display of various products, sorted by categories, with filtering options (e.g., by price, category, rating).
-*	Product Reviews & Ratings: Users can leave reviews and rate products they’ve purchased, helping others make informed decisions.
 *	Shopping Cart: Users can add items to their cart, update quantities, and remove products before proceeding to checkout.
 *	Checkout & Order Management: A smooth checkout process where users can provide shipping details and place orders. They can also view their order history and track the status of placed orders.
 *	Search & Filtering: Powerful search functionality with filtering options for users to quickly find products.

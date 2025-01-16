@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 // Include the database connection and utility functions
 require_once('database.php');
-require_once('util/tags.php');
+
 
 // Check if the database connection exists
 if (!$db) {

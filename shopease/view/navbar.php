@@ -45,7 +45,7 @@ color: #d00;
   left: 0;
   background-color:white;
   box-shadow: 0 5px 10px rgb(0, 0, 0, .1);
-  height: 75px;
+  
 }
 
 .navbar-light .navbar-nav .nav-link{
@@ -148,20 +148,22 @@ color: #d00;
           <a class="nav-link" href="/capstone-shopease/shopease/admin/index.php">Admin</a>
         </li>
         
-          <?php if (isset($_SESSION['firstName'])): ?>
-            <!-- Show customer's name if logged in -->
-            <span class="nav-item login" style="color: #000;">
+        <?php if (isset($_SESSION['firstName'])): ?>
+    <!-- Show customer's name as a link to account.php if logged in -->
+    <li class="nav-item">
+        <a href="/capstone-shopease/shopease/account.php" class="nav-item login" style="color: #000; text-decoration: none;">
             Hello, <?php echo htmlspecialchars($_SESSION['firstName']); ?>
-          </span>
+        </a>
+    </li>
+<?php else: ?>
+    <!-- Show login icon if not logged in -->
+    <li class="nav-item">
+        <a href="/capstone-shopease/shopease/login.php">
+            <i class="fa-solid fa-user"></i>
+        </a>
+    </li>
+<?php endif; ?>
 
-          <?php else: ?>
-            <!-- Show login icon if not logged in -->
-             <li class="nav-item">
-            <a href="/capstone-shopease/shopease/login.php">
-              <i class="fa-solid fa-user"></i>
-            </a>
-            
-          <?php endif; ?>
         </li>
         <li class="nav-item icons">
   <?php if (isset($_SESSION['firstName'])): ?>

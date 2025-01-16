@@ -42,7 +42,7 @@ $statementCategories->closeCursor();
     <form action="../categories/add_category.php" method="post" id="add_category_form">
         <label for="name">Add Category:</label>
         <input type="text" name="name" id="name" required />
-        <input id="form_button" type="submit" value="Add" />
+        <input id="form_button" type="submit" class="btn btn-danger btn-sm" value="Add" />
     </form>
 
     <h1 class="my-4">Category List</h1>

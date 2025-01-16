@@ -1,71 +1,81 @@
-<?php
-// session_start();
-// require("../database.php");
-
-// // Ensure the user is an admin
-// if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-//     header("Location: admin_login.php");
-//     exit();
-// }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../css/admin.css">
-    <style>
-       
-    </style>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <div class="container mt-4">
+        <div class="text-center">
+            <h1>Welcome to the ShopEase Admin Dashboard</h1>
+        </div>
+        
+        <!-- Main Content Area -->
+        <section class="mt-4">
+            <div class="row">
+                <!-- Admin Links Section -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Categories</h5>
+                            <a href=" ../admin/categories/categories_form.php" class="btn btn-primary w-100">Add / Edit Categories</a>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Products</h5>
+                            <a href="../admin/admin_products/index.php" class="btn btn-primary w-100">Add / Edit Products</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="main-content">
-    <h1>Welcome to the ShopEase Admin Dashboard</h1>
-         <!-- Main Content Area -->
-         <section class="main-content">
-            
-            <div class="admin-links">
-    <div class="admin-section">
-        <h2>Categories</h2>
-        <a href=" ../admin/categories/categories_form.php">Add / Edit Categories</a>
-    </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Orders</h5>
+                            <a href="admin_orders/index.php" class="btn btn-primary w-100">View / Edit Orders</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="admin-section">
-        <h2>Products</h2>
-        <a href="../admin/admin_products/index.php">Add / Edit Products</a>
-    </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Customers</h5>
+                            <a href="../customers/manage_customers_form.php" class="btn btn-primary w-100">View / Edit Users</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="admin-section">
-        <h2>Orders</h2>
-        <a href="manage_orders.php">View / Edit Orders</a>
-    </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Admin</h5>
+                            <a href="manage_admin.php" class="btn btn-primary w-100">View / Edit Admins</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="admin-section">
-        <h2>Customers</h2>
-        <a href="../customers/manage_customers_form.php">View / Edit Users</a>
-    </div>
-
-    <div class="admin-section">
-        <h2>Manage Admin</h2>
-        <a href="manage_admin.php">View / Edit Admins</a>
-    </div>
-
-    <div class="admin-section">
-        <h2>ShopEase</h2>
-        <a href="../home.php">View Main Store</a>
-    </div>
-</div>
-
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">ShopEase</h5>
+                            <a href="../home.php" class="btn btn-primary w-100">View Main Store</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
 
-    <script>
-
-    </script>
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

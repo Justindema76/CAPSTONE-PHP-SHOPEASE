@@ -34,6 +34,13 @@ function get_product($productID) {
 function add_item($productID, $quantity) {
     global $db;
 
+    // Check if the user is logged in
+    if (!isset($_SESSION['customerID'])) {
+        // Redirect to login page if not logged in
+        header("Location: login.php");
+        exit();
+    }
+
     if ($quantity > 0) {
         $product = get_product($productID);
         if ($product) {
@@ -51,17 +58,14 @@ function add_item($productID, $quantity) {
                 'image' => $imageName, // Add this line
             ];
         }
-    
         // Add the product and quantity to the database
         add_item_to_db($productID, $quantity);
-    
+
         // Redirect to shop.php
         header("Location: shop.php");
         exit(); // Ensure no further code is executed after the redirect
         }
     }
-
-
 
 // Update item quantity in cart
 function update_item($productID, $quantity) {

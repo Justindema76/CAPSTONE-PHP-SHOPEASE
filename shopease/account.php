@@ -9,66 +9,47 @@ require('database.php');
 session_start();
 
 // Check if customer is logged in
-if (isset($_SESSION['customerID'])) {
-    $customerID = $_SESSION['customerID'];
-} else {
+if (!isset($_SESSION['customerID'])) {
     echo 'Customer is not logged in.';
     exit();
 }
 
-// Fetch customer details
-$query = 'SELECT * FROM customers WHERE customerID = :customerID';
-$statement = $db->prepare($query);
-$statement->bindValue(':customerID', $customerID, PDO::PARAM_INT);
-$statement->execute();
-$customer = $statement->fetch(PDO::FETCH_ASSOC);
-$statement->closeCursor();
+$customerID = $_SESSION['customerID'];
 
-// Check if customer exists
-if (!$customer) {
-    echo 'Customer not found.';
-    exit();
-}
-
-// Check if form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the customer data from the form
-    $customerID = $_POST['customerID'];
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $emailAddress = $_POST['emailAddress'];
-    $city = $_POST['city'];
-    $address = $_POST['address'];
-    $state = $_POST['state'];
-    $postalCode = $_POST['postalCode'];
-    $countryCode = $_POST['countryCode'];
-    $phone = $_POST['phone'];
-    $password = $_POST['password'];
-
-   
-
-    // Prepare the SQL update query
-    $query = 'UPDATE customers SET firstName = :firstName, lastName = :lastName, emailAddress = :emailAddress,
-              city = :city, address = :address, state = :state, postalCode = :postalCode, countryCode = :countryCode,
-              phone = :phone, password = :password WHERE customerID = :customerID';
-    
-    $statement = $db->prepare($query);
-    $statement->bindValue(':firstName', $firstName, PDO::PARAM_STR);
-    $statement->bindValue(':lastName', $lastName, PDO::PARAM_STR);
-    $statement->bindValue(':emailAddress', $emailAddress, PDO::PARAM_STR);
-    $statement->bindValue(':city', $city, PDO::PARAM_STR);
-    $statement->bindValue(':address', $address, PDO::PARAM_STR);
-    $statement->bindValue(':state', $state, PDO::PARAM_STR);
-    $statement->bindValue(':postalCode', $postalCode, PDO::PARAM_STR);
-    $statement->bindValue(':countryCode', $countryCode, PDO::PARAM_STR);
-    $statement->bindValue(':phone', $phone, PDO::PARAM_STR);
-    $statement->bindValue(':password', $password, PDO::PARAM_STR);
+try {
+    // Fetch customer details with country name
+    $queryCustomer = '
+        SELECT customers.*, countries.countryName 
+        FROM customers
+        JOIN countries ON customers.countryCode = countries.countryCode
+        WHERE customers.customerID = :customerID';
+    $statement = $db->prepare($queryCustomer);
     $statement->bindValue(':customerID', $customerID, PDO::PARAM_INT);
     $statement->execute();
+    $customer = $statement->fetch(PDO::FETCH_ASSOC);
     $statement->closeCursor();
 
-    // Redirect to checkout page or show a success message
-    header('Location: checkout.php');
+    if (!$customer) {
+        echo 'No customer found with the provided ID.';
+        exit();
+    }
+
+    // Query to fetch orders for the logged-in customer with order items
+    $query = '
+        SELECT o.orderID, o.orderDate, o.totalAmount, o.orderStatus, oi.productID, oi.quantity, oi.price, p.productName 
+        FROM orders o
+        JOIN order_items oi ON o.orderID = oi.orderID
+        JOIN products p ON oi.productID = p.productID
+        WHERE o.customerID = :customerID
+        ORDER BY o.orderDate DESC';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':customerID', $customerID);
+    $statement->execute();
+    $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
     exit();
 }
 ?>
@@ -82,104 +63,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/shop.css">
-  
 </head>
 <body>
     <!-- Navbar -->
     <?php include("view/navbar.php"); ?>
 
-    <!-- Account Info Form -->
-    <form action="account.php" method="post">
-        <!-- Hidden field for customerID -->
-        <input type="hidden" name="customerID" value="<?php echo htmlspecialchars($customer['customerID']); ?>" />
-
-        <!-- Account Info Section -->
-        <section class="my-2 py-2">
-            <div class="row container mx-auto">
-                <div class="text-center mt-5 pt-5">
-                    <h3 class="font-weight-bold">Account Info</h3>
+    <!-- ACCOUNT SECTION -->
+    <section class="my-5 py-5">
+        <div class="container">
+            <h1 class="font-weight-bold text-center" style="border-bottom: 2px solid #d00;">Account Details</h1>
+            <br>
+            <div class="row">
+                <!-- Shipping Information -->
+                <div class="col-md-6">
+                    <h3>Shipping Address</h3>
                     <hr class="mx-auto">
-                    <div class="account-info">
-                        <!-- Table for customer details -->
-                        <table class="table table-bordered">
+                    <p><strong>Name:</strong> <?php echo htmlspecialchars($customer['firstName'] . ' ' . $customer['lastName']); ?></p>
+                    <p><strong>Email:</strong> <?php echo htmlspecialchars($customer['emailAddress']); ?></p>
+                    <p><strong>Address:</strong> 
+                        <?php echo htmlspecialchars(
+                            $customer['address'] . ', ' . 
+                            $customer['city'] . ', ' . 
+                            $customer['state'] . ', ' . 
+                            $customer['postalCode'] . ', ' . 
+                            $customer['countryName']
+                        ); ?>
+                    </p>
+                    <form action="account-details.php" method="get">
+                        <button type="submit">Update</button>
+                    </form>
+                </div>
+
+                <!-- Orders Section -->
+                <div class="col-md-6">
+                    <h3>Your Orders</h3>
+                    <hr class="mx-auto">
+                    <?php if (count($orders) > 0): ?>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Order Date</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">First Name:</th>
-                                    <td>
-                                        <input type="text" class="form-control" name="firstName" value="<?php echo htmlspecialchars($customer['firstName']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Last Name:</th>
-                                    <td>
-                                        <input type="text" class="form-control" name="lastName" value="<?php echo htmlspecialchars($customer['lastName']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Email:</th>
-                                    <td>
-                                        <input type="email" class="form-control" name="emailAddress" value="<?php echo htmlspecialchars($customer['emailAddress']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">City:</th>
-                                    <td>
-                                        <input type="text" class="form-control" name="city" value="<?php echo htmlspecialchars($customer['city']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Address:</th>
-                                    <td>
-                                        <input type="text" class="form-control" name="address" value="<?php echo htmlspecialchars($customer['address']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">State:</th>
-                                    <td>
-                                        <input type="text" class="form-control" name="state" value="<?php echo htmlspecialchars($customer['state']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Postal Code:</th>
-                                    <td>
-                                        <input type="text" class="form-control" name="postalCode" value="<?php echo htmlspecialchars($customer['postalCode']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Country:</th>
-                                    <td>
-                                        <select name="countryCode" class="form-select">
-                                            <!-- Add country options here -->
-                                            <option value="US" <?php echo ($customer['countryCode'] === 'US') ? 'selected' : ''; ?>>United States</option>
-                                            <option value="CA" <?php echo ($customer['countryCode'] === 'CA') ? 'selected' : ''; ?>>Canada</option>
-                                            <!-- Add more countries as needed -->
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Phone:</th>
-                                    <td>
-                                        <input type="text" class="form-control" name="phone" value="<?php echo htmlspecialchars($customer['phone']); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Password:</th>
-                                    <td>
-                                        <input type="password" class="form-control" name="text" value="<?php echo htmlspecialchars($customer['password']); ?>" />
-                                    </td>
-                                </tr>
+                                <?php foreach ($orders as $order): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($order['orderID']); ?></td>
+                                        <td><?php echo htmlspecialchars($order['productName']); ?></td>
+                                        <td><?php echo htmlspecialchars($order['quantity']); ?></td>
+                                        <td>$<?php echo htmlspecialchars(number_format($order['price'], 2)); ?></td>
+                                        <td><?php echo htmlspecialchars($order['orderDate']); ?></td>
+                                        <td>$<?php echo htmlspecialchars(number_format($order['totalAmount'], 2)); ?></td>
+                                        <td style="color: <?php echo ($order['orderStatus'] === 'Pending') ? 'red' : 'inherit'; ?>;">
+                                            <?php echo htmlspecialchars($order['orderStatus']); ?>
+                                        </td>
+
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
-
-                        <!-- Update customer button -->
-                        <div class="text-end">
-                            <button type="submit">Update Customer</button>
-                        </div>
-                    </div>
+                    <?php else: ?>
+                        <p>You have no orders yet.</p>
+                    <?php endif; ?>
                 </div>
             </div>
-        </section>
-    </form>
+        </div>
+    </section>
 
     <!-- Footer -->
     <?php include("view/footer.php"); ?>

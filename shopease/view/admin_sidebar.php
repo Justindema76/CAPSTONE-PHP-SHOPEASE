@@ -22,20 +22,23 @@
 
            
             <li class="nav-item">
-                <a class="nav-link" href="../index.php">Dashboard</a>
+                <a class="nav-link" href="/capstone-shopease/shopease/admin/index.php">Dashboard</a>
             </li>
             
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="../categories/categories_form.php">Manage Categories</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../admin_products/index.php">Manage Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../customers/manage_customers_form.php">Manage Customers</a>
+                <a class="nav-link" href="../../customers/manage_customers_form.php">Manage Customers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../home.php">Main-Store</a>
+                <a class="nav-link" href="../admin_orders/index.php">Manage Orders</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="/capstone-shopease/shopease/home.php">Main-Store</a>
             </li>
 
            

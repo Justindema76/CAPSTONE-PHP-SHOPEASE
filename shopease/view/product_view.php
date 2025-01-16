@@ -17,7 +17,7 @@ error_reporting(E_ALL);
           <!-- Show image with the correct path based on the script's location -->
           <img src="<?php echo htmlspecialchars($imagePath . $product['imageName']); ?>" 
                alt="<?php echo htmlspecialchars($product['productName']); ?>" 
-               class="img-fluid rounded" style="max-width: 400px; height: auto;">
+               class="img-fluid rounded" style="width: 400px; height: auto;">
       <?php else: ?>
           <p class="text-muted">No image available for this product.</p>
       <?php endif; ?>

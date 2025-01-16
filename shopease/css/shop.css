@@ -7,7 +7,9 @@
   font-family: 'Poppins', sans-serif;
 }
 
-
+section{
+  padding-top: 100px;
+}
 
 
 body{
@@ -244,7 +246,7 @@ button {
 
 /* Image styles */
 .product_view .product-image img {
-  width: 60%; /* Adjust the size of the image */
+  width: 80%; /* Adjust the size of the image */
   height: auto; /* Maintain aspect ratio */
   border-radius: 8px; /* Rounded corners */
   border: 1px solid #ccc; /* Border style */

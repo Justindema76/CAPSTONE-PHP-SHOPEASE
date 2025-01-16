@@ -66,6 +66,13 @@ if (!isset($_POST['customerID']) || !isset($_SESSION['customerID'])) {
             $insertOrderItemStmt->bindValue(':quantity', $item['quantity'], PDO::PARAM_INT);
             $insertOrderItemStmt->bindValue(':price', $item['listPrice'], PDO::PARAM_STR);
             $insertOrderItemStmt->execute();
+
+            // Update product stock in products table
+            $updateStockQuery = 'UPDATE products SET stock = stock - :quantity WHERE productID = :productID';
+            $updateStockStmt = $db->prepare($updateStockQuery);
+            $updateStockStmt->bindValue(':quantity', $item['quantity'], PDO::PARAM_INT);
+            $updateStockStmt->bindValue(':productID', $item['productID'], PDO::PARAM_INT);
+            $updateStockStmt->execute();
         }
 
         // Clear the cart
@@ -109,6 +116,7 @@ if (!isset($_POST['customerID']) || !isset($_SESSION['customerID'])) {
 
     <!-- Confirmation Message -->
     <?php if ($checkoutSuccess): ?>
+        <br>
         <section class="my-5 py-5">
             <div class="container text-center">
                 <h1>Order Placed Successfully!</h1>

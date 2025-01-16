@@ -140,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     
     <section class="cart container my-5 py-5">
+        <br>
     <div class="container mt-2">
         <h2>Your Shopping Cart</h2>
         <hr>
